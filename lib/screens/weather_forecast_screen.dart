@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_app/screens/city_screen.dart';
@@ -57,9 +59,11 @@ class WeatherForecastScreenState extends State<WeatherForecastScreen> {
               }));
 
               if (cityName != null) {
-                _cityName = cityName;
-                forecastObject =
-                    WeatherApi().fetchWeatherForecast(cityName: _cityName);
+                setState(() {
+                  _cityName = cityName;
+                  forecastObject =
+                      WeatherApi().fetchWeatherForecast(cityName: _cityName);
+                });
               }
             },
           ),

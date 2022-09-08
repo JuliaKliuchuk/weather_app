@@ -20,7 +20,7 @@ class WeatherApi {
     log('request --- ${uri.toString()}');
 
     var response = await http.get(uri);
-    print('response --- ${response.body}');
+    log('response --- ${response.body}');
 
     if (response.statusCode == 200) {
       return WeatherForecast.fromJson(json.decode(response.body));
