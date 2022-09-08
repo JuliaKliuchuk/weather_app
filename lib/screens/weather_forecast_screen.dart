@@ -5,6 +5,8 @@ import 'package:weather_app/widgets/temp_view.dart';
 
 import '../api/weather_api.dart';
 import '../models/weather_forecast.dart';
+import '../widgets/bottom_list_view.dart';
+import '../widgets/detail_view.dart';
 
 class WeatherForecastScreen extends StatefulWidget {
   const WeatherForecastScreen({Key? key}) : super(key: key);
@@ -63,6 +65,10 @@ class WeatherForecastScreenState extends State<WeatherForecastScreen> {
                     CityView(snapshot: snapshot),
                     const SizedBox(height: 50.0),
                     TempView(snapshot: snapshot),
+                    const SizedBox(height: 50.0),
+                    DetailView(snapshot: snapshot),
+                    const SizedBox(height: 50.0),
+                    BottomListView(snapshot: snapshot),
                   ],
                 );
               } else {
