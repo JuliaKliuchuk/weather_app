@@ -1,3 +1,4 @@
+import '../utilites/constants.dart';
 import 'feels_like.dart';
 import 'temp.dart';
 import 'weather.dart';
@@ -70,7 +71,7 @@ class WeatherList {
     return data;
   }
 
-  // String getIconUrl() {
-  //   return Constants.WEATHER_IMAGES_URL + weather[0].icon + '.png';
-  // }
+  String getIconUrl() {
+    return '${Constants.WEATHER_IMAGES_URL}${weather[0].icon}.png';
+  }
 }
