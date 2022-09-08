@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:weather_app/widgets/city_view.dart';
 
 import '../api/weather_api.dart';
 import '../models/weather_forecast.dart';
@@ -21,9 +22,9 @@ class WeatherForecastScreenState extends State<WeatherForecastScreen> {
 
     forecastObject = WeatherApi().fetchWeatherForecast(cityName: _cityName);
 
-    forecastObject.then((weather) {
-      print('in London -----${weather.list![0].weather[0].main}');
-    });
+    // forecastObject.then((weather) {
+    //   print('in London -----${weather.list![0].weather[0].main}');
+    // });
   }
 
   @override
@@ -51,22 +52,27 @@ class WeatherForecastScreenState extends State<WeatherForecastScreen> {
       ),
       body: ListView(
         children: <Widget>[
-          Container(
-            child: FutureBuilder<WeatherForecast>(
-              future: forecastObject,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return const Center(child: Text('OK'));
-                } else {
-                  return const Center(
-                      child: SpinKitDoubleBounce(
-                    color: Colors.black,
-                    size: 100.0,
-                  ));
-                }
-              },
-            ),
-          )
+          FutureBuilder<WeatherForecast>(
+            future: forecastObject,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 150.0,
+                      child: CityView(snapshot: snapshot),
+                    )
+                  ],
+                );
+              } else {
+                return const Center(
+                    child: SpinKitDoubleBounce(
+                  color: Colors.black,
+                  size: 100.0,
+                ));
+              }
+            },
+          ),
         ],
       ),
     );
