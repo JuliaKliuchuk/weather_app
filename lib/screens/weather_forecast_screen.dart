@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../api/weather_api.dart';
 import '../models/weather_forecast.dart';
@@ -20,11 +21,12 @@ class WeatherForecastScreen extends StatefulWidget {
 class WeatherForecastScreenState extends State<WeatherForecastScreen> {
   late Future<WeatherForecast> forecastObject =
       Future.value(widget.locationWeather);
-  late String _cityName = 'London';
+  late String _cityName;
 
   @override
   void initState() {
     super.initState();
+    forecastObject = Future.value(widget.locationWeather);
 
     if (widget.locationWeather != null) {
       forecastObject = Future.value(widget.locationWeather);
@@ -71,7 +73,18 @@ class WeatherForecastScreenState extends State<WeatherForecastScreen> {
           FutureBuilder<WeatherForecast>(
             future: forecastObject,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const <Widget>[
+                      SpinKitDoubleBounce(color: Colors.black87, size: 100.0),
+                    ],
+                  ),
+                );
+              } else if (snapshot.hasData) {
                 return Column(
                   children: <Widget>[
                     const SizedBox(height: 50.0),
