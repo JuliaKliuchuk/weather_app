@@ -51,7 +51,7 @@ class WeatherForecastScreenState extends State<WeatherForecastScreen> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.location_city),
+            icon: const Icon(Icons.place_outlined),
             onPressed: () async {
               var tappedName = await Navigator.push(context,
                   MaterialPageRoute(builder: (context) {
@@ -68,47 +68,47 @@ class WeatherForecastScreenState extends State<WeatherForecastScreen> {
           ),
         ],
       ),
-      body: ListView(
-        children: <Widget>[
-          FutureBuilder<WeatherForecast>(
-            future: forecastObject,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      SpinKitDoubleBounce(color: Colors.black87, size: 100.0),
+      body: Center(
+        child: ListView(
+          children: <Widget>[
+            FutureBuilder<WeatherForecast>(
+              future: forecastObject,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height - 105.5,
+                    child: const SpinKitDoubleBounce(
+                        color: Colors.blueGrey, size: 100.0),
+                  );
+                } else if (snapshot.hasData) {
+                  return Column(
+                    children: <Widget>[
+                      const SizedBox(height: 50.0),
+                      CityView(snapshot: snapshot),
+                      const SizedBox(height: 50.0),
+                      TempView(snapshot: snapshot),
+                      const SizedBox(height: 50.0),
+                      DetailView(snapshot: snapshot),
+                      const SizedBox(height: 50.0),
+                      BottomListView(snapshot: snapshot),
                     ],
-                  ),
-                );
-              } else if (snapshot.hasData) {
-                return Column(
-                  children: <Widget>[
-                    const SizedBox(height: 50.0),
-                    CityView(snapshot: snapshot),
-                    const SizedBox(height: 50.0),
-                    TempView(snapshot: snapshot),
-                    const SizedBox(height: 50.0),
-                    DetailView(snapshot: snapshot),
-                    const SizedBox(height: 50.0),
-                    BottomListView(snapshot: snapshot),
-                  ],
-                );
-              } else {
-                return const Center(
-                  child: Text(
-                    'City not found\nPlease, enter correct city',
-                    style: TextStyle(fontSize: 25),
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
-            },
-          ),
-        ],
+                  );
+                } else {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height - 105.5,
+                    child: const Center(
+                      child: Text(
+                        'City not found\nPlease, enter correct city',
+                        style: TextStyle(fontSize: 25),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
